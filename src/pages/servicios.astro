@@ -1,0 +1,335 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const servicios = [
+  {
+    id: 'automatizacion',
+    numero: '01',
+    titulo: 'Automatización del hogar',
+    subtitulo: 'Control total. Sin esfuerzo.',
+    descripcion: 'Diseñamos sistemas de domótica que unifican todos los aspectos de su hogar en una experiencia fluida e intuitiva. Iluminación, climatización, seguridad, entretenimiento y más — controlado con un toque o con su voz.',
+    beneficios: [
+      'Control centralizado por app o voz',
+      'Escenas personalizadas por momento del día',
+      'Eficiencia energética automática',
+      'Integración con Apple HomeKit, Google Home, Amazon Alexa',
+      'Sistemas de seguridad inteligentes',
+      'Monitoreo remoto 24/7',
+    ],
+    marcas: ['Lutron', 'Crestron', 'Control4', 'Sonos', 'Nest'],
+  },
+  {
+    id: 'tecnologia',
+    numero: '02',
+    titulo: 'Integración tecnológica',
+    subtitulo: 'La tecnología invisible que lo cambia todo.',
+    descripcion: 'Infraestructura de red de alta velocidad, sistemas audiovisuales de cine, soluciones de conectividad avanzada y equipos de última generación integrados de forma invisible en la arquitectura de su propiedad.',
+    beneficios: [
+      'Redes Wi-Fi 6E de cobertura total',
+      'Sistemas de audio multizona de alta fidelidad',
+      'Cine en casa 4K/8K con sonido inmersivo',
+      'Cableado estructurado y organización técnica',
+      'Soluciones de ciberseguridad para el hogar',
+      'Integración con arquitectura existente',
+    ],
+    marcas: ['Sonos', 'Bang & Olufsen', 'Samsung', 'Ubiquiti', 'Savant'],
+  },
+  {
+    id: 'consultoria',
+    numero: '03',
+    titulo: 'Consultoría de propiedades',
+    subtitulo: 'La visión experta que maximiza su inversión.',
+    descripcion: 'Nuestro equipo evalúa propiedades con una perspectiva única que combina el valor arquitectónico tradicional con el potencial de integración tecnológica, asesorándole para tomar decisiones de inversión informadas y visionarias.',
+    beneficios: [
+      'Auditoría tecnológica de propiedades',
+      'Evaluación de potencial de automatización',
+      'Análisis de valorización por integración smart',
+      'Consultoría pre-compra especializada',
+      'Planificación de retrofitting inteligente',
+      'Acompañamiento en proyectos de construcción',
+    ],
+    marcas: [],
+  },
+  {
+    id: 'diseno',
+    numero: '04',
+    titulo: 'Diseño de interiores smart',
+    subtitulo: 'Estética y tecnología en perfecta armonía.',
+    descripcion: 'La tecnología no debería verse. Nuestro equipo de diseño trabaja para integrar cada elemento técnico de forma invisible, creando espacios donde la funcionalidad inteligente coexiste con la máxima expresión estética.',
+    beneficios: [
+      'Diseño de espacios centrado en la experiencia',
+      'Integración invisible de dispositivos',
+      'Selección de materiales premium',
+      'Coordinación con arquitectos e interioristas',
+      'Prototipos y simulaciones 3D',
+      'Gestión integral del proyecto',
+    ],
+    marcas: [],
+  },
+];
+---
+
+<Layout
+  title="Servicios — WellGrid Homes"
+  description="Automatización del hogar, integración tecnológica, consultoría de propiedades y diseño de interiores smart. El estándar WellGrid."
+>
+  <!-- PAGE HEADER -->
+  <section class="page-hero">
+    <div class="container">
+      <span class="section-label">Servicios</span>
+      <h1>Lo que transformamos</h1>
+      <p class="page-hero-sub">
+        Cada servicio está diseñado para elevar su propiedad a un nuevo estándar de vida.
+        No instalamos tecnología, creamos experiencias.
+      </p>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  {servicios.map((s, i) => (
+    <section id={s.id} class={`servicio ${i % 2 === 1 ? 'servicio--alt' : ''}`}>
+      <div class="container">
+        <div class="servicio-inner">
+          <div class="servicio-info">
+            <div class="servicio-header">
+              <span class="servicio-numero">{s.numero}</span>
+              <div>
+                <span class="section-label">{s.subtitulo}</span>
+                <h2>{s.titulo}</h2>
+              </div>
+            </div>
+            <p class="servicio-desc">{s.descripcion}</p>
+            <a href="/contacto" class="btn-primary">
+              Solicitar este servicio
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+          <div class="servicio-beneficios">
+            <h3>Incluye</h3>
+            <ul>
+              {s.beneficios.map(b => (
+                <li>
+                  <span class="check">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                      <path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                  {b}
+                </li>
+              ))}
+            </ul>
+            {s.marcas.length > 0 && (
+              <div class="marcas">
+                <span class="marcas-label">Tecnologías que integramos</span>
+                <div class="marcas-list">
+                  {s.marcas.map(m => <span class="marca-tag">{m}</span>)}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-inner">
+        <div class="cta-deco"></div>
+        <span class="section-label" style="justify-content: center; margin-bottom: 1.5rem;">Su proyecto</span>
+        <h2>Cuéntenos sobre<br>su propiedad</h2>
+        <p>Cada proyecto comienza con una conversación. Descubramos juntos qué es posible.</p>
+        <a href="/contacto" class="btn-primary">
+          Agendar consulta gratuita
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .page-hero {
+    padding: 10rem 0 5rem;
+    border-bottom: 1px solid rgba(201, 169, 110, 0.1);
+  }
+
+  .page-hero h1 {
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 300;
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .page-hero-sub {
+    font-size: 1.05rem;
+    color: var(--gris-claro);
+    max-width: 520px;
+    line-height: 1.75;
+  }
+
+  .servicio {
+    padding: 6rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .servicio--alt {
+    background: var(--negro-2);
+  }
+
+  .servicio-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+  }
+
+  .servicio-header {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    margin-bottom: 1.75rem;
+  }
+
+  .servicio-numero {
+    font-family: var(--font-display);
+    font-size: 4rem;
+    font-weight: 300;
+    color: rgba(201, 169, 110, 0.2);
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: -0.5rem;
+  }
+
+  .servicio-info h2 {
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 300;
+    color: var(--blanco);
+    margin-top: 0.25rem;
+  }
+
+  .servicio-desc {
+    font-size: 0.95rem;
+    color: var(--gris-claro);
+    line-height: 1.85;
+    margin-bottom: 2rem;
+  }
+
+  .servicio-beneficios h3 {
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--dorado);
+    margin-bottom: 1.5rem;
+  }
+
+  .servicio-beneficios ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+  }
+
+  .servicio-beneficios li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.875rem;
+    font-size: 0.9rem;
+    color: var(--blanco-2);
+    line-height: 1.5;
+  }
+
+  .check {
+    width: 20px;
+    height: 20px;
+    border: 1px solid rgba(201, 169, 110, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--dorado);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .marcas {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .marcas-label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gris);
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  .marcas-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .marca-tag {
+    font-size: 0.78rem;
+    color: var(--gris-claro);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 0.3rem 0.875rem;
+    letter-spacing: 0.06em;
+  }
+
+  .cta-section {
+    padding: 8rem 0;
+    text-align: center;
+  }
+
+  .cta-inner {
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .cta-deco {
+    width: 1px;
+    height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--dorado));
+    margin: 0 auto 3rem;
+  }
+
+  .cta-inner h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    color: var(--blanco);
+    margin-bottom: 1.25rem;
+  }
+
+  .cta-inner p {
+    font-size: 0.95rem;
+    color: var(--gris-claro);
+    margin-bottom: 2.5rem;
+    line-height: 1.75;
+  }
+
+  @media (max-width: 900px) {
+    .servicio-inner {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    .servicio-header {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .servicio-numero {
+      font-size: 2.5rem;
+    }
+  }
+</style>
