@@ -202,24 +202,32 @@
   <script>
     const btn = document.getElementById("whatsappBtn");
 
-    const mensaje1 = "https://wa.me/56948590700?text=Hola%2C%20tengo%20una%20propiedad%20y%20me%20gustar%C3%ADa%20evaluarla.";
-    const mensaje2 = "https://wa.me/56948590700?text=Hola%2C%20vi%20tu%20p%C3%A1gina%20y%20me%20interesa%20conversar.";
+    const mensajeFrio = "https://wa.me/56948590700?text=Hola%2C%20vi%20tu%20p%C3%A1gina%20y%20me%20interesa%20conversar.";
+    const mensajeCaliente = "https://wa.me/56948590700?text=Hola%2C%20tengo%20una%20propiedad%20y%20me%20gustar%C3%ADa%20evaluarla.";
 
-    let modoActivo = "frio";
+    let estado = "frio";
+    let interactuo = false;
 
-    btn.href = mensaje2;
+    // estado inicial
+    btn.href = mensajeFrio;
 
-    // ⏱ ahora 4 segundos (antes era muy rápido)
-    setTimeout(() => {
-      btn.href = mensaje1;
-      modoActivo = "caliente";
-    }, 4000);
-
-    btn.addEventListener("mouseover", () => {
-      if (modoActivo === "frio") {
-        btn.href = mensaje2;
+    // 🔥 DETECCIÓN DE INTERACCIÓN REAL
+    function activarCaliente() {
+      if (estado !== "caliente") {
+        estado = "caliente";
+        btn.href = mensajeCaliente;
       }
-    });
+    }
+
+    document.addEventListener("mousemove", activarCaliente);
+    document.addEventListener("scroll", activarCaliente);
+    document.addEventListener("touchstart", activarCaliente);
+
+    // ⏱ RESPALDO POR TIEMPO (si no interactúa)
+    setTimeout(() => {
+      activarCaliente();
+    }, 5000);
+
   </script>
 
 </body>
