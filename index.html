@@ -7,7 +7,19 @@
 
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@200;300&family=DM+Serif+Display&display=swap" rel="stylesheet">
 
+  <!-- BOTÓN INTELIGENTE -->
   <script>
+    let whatsappLink = "https://wa.me/56948590700?text=Hola%2C%20quiero%20informaci%C3%B3n";
+
+    // después de 3 segundos cambia a mensaje filtrado
+    setTimeout(() => {
+      whatsappLink = "https://wa.me/56948590700?text=Hola%2C%20tengo%20una%20propiedad%20y%20me%20gustar%C3%ADa%20evaluarla";
+    }, 3000);
+
+    function abrirWhatsApp() {
+      window.open(whatsappLink, '_blank');
+    }
+
     function trackClick() {
       console.log("CLICK CONTACTO");
 
@@ -117,6 +129,7 @@
       opacity: 0;
       animation: cinematic 2s ease forwards;
       animation-delay: 1.8s;
+      cursor: pointer;
     }
 
     .button:hover {
@@ -171,7 +184,6 @@
     }
 
     @media (max-width: 768px) {
-
       .container {
         padding: 0 6%;
         align-items: flex-end;
@@ -193,7 +205,6 @@
         font-size: 13px;
       }
     }
-
   </style>
 </head>
 
@@ -212,10 +223,7 @@
 
       <div class="name">JPRL</div>
 
-      <a class="button" 
-         href="https://wa.me/56948590700?text=Hola%2C%20tengo%20una%20propiedad%20y%20me%20gustar%C3%ADa%20evaluarla"
-         target="_blank"
-         onclick="trackClick()">
+      <a class="button" href="#" onclick="trackClick(); abrirWhatsApp(); return false;">
         CONTACTO DIRECTO
       </a>
 
