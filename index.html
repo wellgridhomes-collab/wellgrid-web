@@ -5,32 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WELLGRID</title>
 
+  <!-- FAVICON -->
+  <link rel="icon" href="fondo.png" type="image/png">
+
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@200;300&family=DM+Serif+Display&display=swap" rel="stylesheet">
-
-  <!-- BOTÓN INTELIGENTE -->
-  <script>
-    let whatsappLink = "https://wa.me/56948590700?text=Hola%2C%20quiero%20informaci%C3%B3n";
-
-    // después de 3 segundos cambia a mensaje filtrado
-    setTimeout(() => {
-      whatsappLink = "https://wa.me/56948590700?text=Hola%2C%20tengo%20una%20propiedad%20y%20me%20gustar%C3%ADa%20evaluarla";
-    }, 3000);
-
-    function abrirWhatsApp() {
-      window.open(whatsappLink, '_blank');
-    }
-
-    function trackClick() {
-      console.log("CLICK CONTACTO");
-
-      if (typeof gtag !== "undefined") {
-        gtag('event', 'click_whatsapp', {
-          event_category: 'contacto',
-          event_label: 'boton_principal'
-        });
-      }
-    }
-  </script>
 
   <style>
     * {
@@ -53,7 +31,7 @@
       background-image: url('fondo.png');
       background-size: cover;
       background-position: center;
-      animation: zoom 28s ease infinite alternate;
+      animation: zoom 25s ease infinite alternate;
     }
 
     .overlay {
@@ -62,7 +40,7 @@
       height: 100%;
       background: linear-gradient(
         to bottom,
-        rgba(255,255,255,0.20),
+        rgba(255,255,255,0.22),
         rgba(0,0,0,0.75)
       );
     }
@@ -87,8 +65,7 @@
     .small {
       font-weight: 200;
       letter-spacing: 4px;
-      font-size: 12px;
-      opacity: 0.8;
+      font-size: 13px;
     }
 
     .italic {
@@ -102,7 +79,6 @@
       margin-top: 6px;
       font-size: 11px;
       letter-spacing: 3px;
-      opacity: 0.7;
     }
 
     .name {
@@ -113,23 +89,22 @@
 
     .button {
       display: inline-block;
-      margin-top: 60px;
-      padding: 16px 46px;
+      margin-top: 55px;
+      padding: 14px 42px;
       border-radius: 999px;
       text-decoration: none;
       font-size: 12px;
-      letter-spacing: 2.8px;
+      letter-spacing: 2.5px;
       color: white;
       background: rgba(0,0,0,0.55);
       border: 1px solid rgba(255,255,255,0.2);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(10px);
       transition: all 0.35s ease;
       position: relative;
       overflow: hidden;
       opacity: 0;
       animation: cinematic 2s ease forwards;
       animation-delay: 1.8s;
-      cursor: pointer;
     }
 
     .button:hover {
@@ -148,7 +123,7 @@
       background: linear-gradient(
         120deg,
         transparent,
-        rgba(255,255,255,0.25),
+        rgba(255,255,255,0.2),
         transparent
       );
       transition: all 0.6s ease;
@@ -159,10 +134,10 @@
     }
 
     .micro {
-      margin-top: 30px;
+      margin-top: 28px;
       font-size: 10px;
       letter-spacing: 3px;
-      opacity: 0.35;
+      opacity: 0.4;
     }
 
     @keyframes cinematic {
@@ -180,31 +155,23 @@
 
     @keyframes zoom {
       from { transform: scale(1); }
-      to { transform: scale(1.08); }
+      to { transform: scale(1.06); }
     }
 
     @media (max-width: 768px) {
       .container {
-        padding: 0 6%;
-        align-items: flex-end;
-        padding-bottom: 12%;
+        padding: 0 8%;
       }
 
       .name {
-        font-size: 46px;
+        font-size: 48px;
       }
 
       .italic {
-        font-size: 20px;
-      }
-
-      .button {
-        width: 100%;
-        text-align: center;
-        padding: 18px;
-        font-size: 13px;
+        font-size: 22px;
       }
     }
+
   </style>
 </head>
 
@@ -223,7 +190,7 @@
 
       <div class="name">JPRL</div>
 
-      <a class="button" href="#" onclick="trackClick(); abrirWhatsApp(); return false;">
+      <a id="whatsappBtn" class="button" href="#" target="_blank">
         CONTACTO DIRECTO
       </a>
 
@@ -231,6 +198,29 @@
 
     </div>
   </div>
+
+  <script>
+    const btn = document.getElementById("whatsappBtn");
+
+    const mensaje1 = "https://wa.me/56948590700?text=Hola%2C%20tengo%20una%20propiedad%20y%20me%20gustar%C3%ADa%20evaluarla.";
+    const mensaje2 = "https://wa.me/56948590700?text=Hola%2C%20vi%20tu%20p%C3%A1gina%20y%20me%20interesa%20conversar.";
+
+    let modoActivo = "frio";
+
+    btn.href = mensaje2;
+
+    // ⏱ ahora 4 segundos (antes era muy rápido)
+    setTimeout(() => {
+      btn.href = mensaje1;
+      modoActivo = "caliente";
+    }, 4000);
+
+    btn.addEventListener("mouseover", () => {
+      if (modoActivo === "frio") {
+        btn.href = mensaje2;
+      }
+    });
+  </script>
 
 </body>
 </html>
