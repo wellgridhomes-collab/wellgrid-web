@@ -7,6 +7,19 @@
 
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@200;300&family=DM+Serif+Display&display=swap" rel="stylesheet">
 
+  <script>
+    function trackClick() {
+      console.log("CLICK CONTACTO");
+
+      if (typeof gtag !== "undefined") {
+        gtag('event', 'click_whatsapp', {
+          event_category: 'contacto',
+          event_label: 'boton_principal'
+        });
+      }
+    }
+  </script>
+
   <style>
     * {
       margin: 0;
@@ -28,7 +41,7 @@
       background-image: url('fondo.png');
       background-size: cover;
       background-position: center;
-      animation: zoom 25s ease infinite alternate;
+      animation: zoom 28s ease infinite alternate;
     }
 
     .overlay {
@@ -37,8 +50,8 @@
       height: 100%;
       background: linear-gradient(
         to bottom,
-        rgba(255,255,255,0.25),
-        rgba(0,0,0,0.7)
+        rgba(255,255,255,0.20),
+        rgba(0,0,0,0.75)
       );
     }
 
@@ -62,7 +75,8 @@
     .small {
       font-weight: 200;
       letter-spacing: 4px;
-      font-size: 13px;
+      font-size: 12px;
+      opacity: 0.8;
     }
 
     .italic {
@@ -76,6 +90,7 @@
       margin-top: 6px;
       font-size: 11px;
       letter-spacing: 3px;
+      opacity: 0.7;
     }
 
     .name {
@@ -86,16 +101,16 @@
 
     .button {
       display: inline-block;
-      margin-top: 55px;
-      padding: 14px 42px;
+      margin-top: 60px;
+      padding: 16px 46px;
       border-radius: 999px;
       text-decoration: none;
       font-size: 12px;
-      letter-spacing: 2.5px;
+      letter-spacing: 2.8px;
       color: white;
       background: rgba(0,0,0,0.55);
       border: 1px solid rgba(255,255,255,0.2);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
       transition: all 0.35s ease;
       position: relative;
       overflow: hidden;
@@ -105,7 +120,7 @@
     }
 
     .button:hover {
-      background: rgba(0,0,0,0.8);
+      background: rgba(0,0,0,0.85);
       border-color: rgba(255,255,255,0.35);
       transform: translateY(-2px);
     }
@@ -120,7 +135,7 @@
       background: linear-gradient(
         120deg,
         transparent,
-        rgba(255,255,255,0.2),
+        rgba(255,255,255,0.25),
         transparent
       );
       transition: all 0.6s ease;
@@ -131,10 +146,10 @@
     }
 
     .micro {
-      margin-top: 28px;
+      margin-top: 30px;
       font-size: 10px;
       letter-spacing: 3px;
-      opacity: 0.4;
+      opacity: 0.35;
     }
 
     @keyframes cinematic {
@@ -152,20 +167,30 @@
 
     @keyframes zoom {
       from { transform: scale(1); }
-      to { transform: scale(1.06); }
+      to { transform: scale(1.08); }
     }
 
     @media (max-width: 768px) {
+
       .container {
-        padding: 0 8%;
+        padding: 0 6%;
+        align-items: flex-end;
+        padding-bottom: 12%;
       }
 
       .name {
-        font-size: 48px;
+        font-size: 46px;
       }
 
       .italic {
-        font-size: 22px;
+        font-size: 20px;
+      }
+
+      .button {
+        width: 100%;
+        text-align: center;
+        padding: 18px;
+        font-size: 13px;
       }
     }
 
@@ -187,7 +212,10 @@
 
       <div class="name">JPRL</div>
 
-      <a class="button" href="https://wa.me/56948590700" target="_blank">
+      <a class="button" 
+         href="https://wa.me/56948590700?text=Hola%2C%20tengo%20una%20propiedad%20y%20me%20gustar%C3%ADa%20evaluarla"
+         target="_blank"
+         onclick="trackClick()">
         CONTACTO DIRECTO
       </a>
 
