@@ -5,115 +5,168 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WELLGRID</title>
 
-  <link rel="icon" href="fondo.png" type="image/png">
-
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@200;300&family=DM+Serif+Display&display=swap" rel="stylesheet">
 
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     body {
-      font-family:'DM Sans',sans-serif;
-      height:100vh;
-      overflow:hidden;
-      color:#111;
+      font-family: 'DM Sans', sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      color: #111;
     }
 
     .background {
-      position:fixed;
-      width:100%;
-      height:100%;
-      background:url('fondo.png') center/cover no-repeat;
-      animation:zoom 25s ease infinite alternate;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background-image: url('fondo.png');
+      background-size: cover;
+      background-position: center;
+      animation: zoom 25s ease infinite alternate;
     }
 
     .overlay {
-      position:fixed;
-      width:100%;
-      height:100%;
-      background:linear-gradient(to bottom, rgba(255,255,255,0.22), rgba(0,0,0,0.75));
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.25),
+        rgba(0,0,0,0.7)
+      );
     }
 
     .container {
-      position:relative;
-      height:100%;
-      display:flex;
-      align-items:center;
-      padding-left:10%;
-      max-width:1400px;
-      margin:0 auto;
+      position: relative;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      padding-left: 10%;
+      max-width: 1400px;
+      margin: 0 auto;
     }
 
     .text-block {
-      max-width:420px;
-      opacity:0;
-      animation:cinematic 2s ease forwards;
-      animation-delay:.8s;
+      max-width: 420px;
+      opacity: 0;
+      animation: cinematic 2s ease forwards;
+      animation-delay: 0.8s;
     }
 
-    .small { font-weight:200; letter-spacing:4px; font-size:13px; }
+    .small {
+      font-weight: 200;
+      letter-spacing: 4px;
+      font-size: 13px;
+    }
 
     .italic {
-      font-family:'DM Serif Display',serif;
-      font-style:italic;
-      font-size:26px;
-      margin-top:25px;
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: 26px;
+      margin-top: 25px;
     }
 
-    .location { margin-top:6px; font-size:11px; letter-spacing:3px; }
+    .location {
+      margin-top: 6px;
+      font-size: 11px;
+      letter-spacing: 3px;
+    }
 
     .name {
-      font-family:'DM Serif Display',serif;
-      font-size:64px;
-      margin-top:30px;
+      font-family: 'DM Serif Display', serif;
+      font-size: 64px;
+      margin-top: 30px;
     }
 
     .button {
-      display:inline-block;
-      margin-top:55px;
-      padding:14px 42px;
-      border-radius:999px;
-      text-decoration:none;
-      font-size:12px;
-      letter-spacing:2.5px;
-      color:white;
-      background:rgba(0,0,0,0.55);
-      border:1px solid rgba(255,255,255,0.2);
-      backdrop-filter:blur(10px);
-      transition:.35s;
-      position:relative;
-      overflow:hidden;
-      opacity:0;
-      animation:cinematic 2s ease forwards;
-      animation-delay:1.8s;
+      display: inline-block;
+      margin-top: 55px;
+      padding: 14px 42px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 2.5px;
+      color: white;
+      background: rgba(0,0,0,0.55);
+      border: 1px solid rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      transition: all 0.35s ease;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      animation: cinematic 2s ease forwards;
+      animation-delay: 1.8s;
     }
 
     .button:hover {
-      background:rgba(0,0,0,0.85);
-      transform:translateY(-2px);
+      background: rgba(0,0,0,0.8);
+      border-color: rgba(255,255,255,0.35);
+      transform: translateY(-2px);
+    }
+
+    .button::after {
+      content: "";
+      position: absolute;
+      width: 120%;
+      height: 100%;
+      top: 0;
+      left: -120%;
+      background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.2),
+        transparent
+      );
+      transition: all 0.6s ease;
+    }
+
+    .button:hover::after {
+      left: 120%;
     }
 
     .micro {
-      margin-top:28px;
-      font-size:10px;
-      letter-spacing:3px;
-      opacity:.4;
+      margin-top: 28px;
+      font-size: 10px;
+      letter-spacing: 3px;
+      opacity: 0.4;
     }
 
     @keyframes cinematic {
-      from { opacity:0; transform:translateY(30px); filter:blur(6px);}
-      to { opacity:1; transform:translateY(0); filter:blur(0);}
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.98);
+        filter: blur(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
     }
 
     @keyframes zoom {
-      from { transform:scale(1);}
-      to { transform:scale(1.06);}
+      from { transform: scale(1); }
+      to { transform: scale(1.06); }
     }
 
-    @media (max-width:768px){
-      .container { padding:0 8%; }
-      .name { font-size:48px; }
-      .italic { font-size:22px; }
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 8%;
+      }
+
+      .name {
+        font-size: 48px;
+      }
+
+      .italic {
+        font-size: 22px;
+      }
     }
 
   </style>
@@ -121,73 +174,67 @@
 
 <body>
 
-<div class="background"></div>
-<div class="overlay"></div>
+  <div class="background"></div>
+  <div class="overlay"></div>
 
-<div class="container">
-  <div class="text-block">
+  <div class="container">
+    <div class="text-block">
 
-    <div class="small">REAL ESTATE · ADVISORY</div>
-    <div class="italic">Broker Residencial</div>
-    <div class="location">LO BARNECHEA · LA DEHESA</div>
+      <div class="small">REAL ESTATE · ADVISORY</div>
 
-    <div class="name">JPRL</div>
+      <div class="italic">Broker Residencial</div>
+      <div class="location">LO BARNECHEA · LA DEHESA</div>
 
-    <a id="whatsappBtn" class="button" href="#" target="_blank">
-      CONTACTO DIRECTO
-    </a>
+      <div class="name">JPRL</div>
 
-    <div class="micro">PRIVATE BROKERAGE</div>
+      <a id="whatsappBtn" class="button" href="#" target="_blank">
+        CONTACTO DIRECTO
+      </a>
 
+      <div class="micro">PRIVATE BROKERAGE</div>
+
+    </div>
   </div>
-</div>
 
 <script>
-const btn = document.getElementById("whatsappBtn");
+  const phone = "56948590700";
 
-const frio = "https://wa.me/56948590700?text=Hola%2C%20vi%20tu%20p%C3%A1gina%20y%20me%20interesa%20conversar.";
-const caliente = "https://wa.me/56948590700?text=Hola%2C%20tengo%20una%20propiedad%20y%20me%20gustar%C3%ADa%20evaluarla.";
+  const msgGeneral = "Hola, me gustaría recibir información.";
+  const msgPropiedad = "Hola, tengo una propiedad y me gustaría evaluarla.";
 
-let estado = "frio";
-let inicio = Date.now();
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-btn.href = frio;
+  const btn = document.getElementById("whatsappBtn");
 
-// detectar mobile
-const esMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent);
-
-function activarCaliente(){
-  if(estado !== "caliente"){
-    estado = "caliente";
-    btn.href = caliente;
+  function setLink(msg) {
+    btn.href = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
   }
-}
 
-function evaluarInteraccion(){
-  let tiempo = Date.now() - inicio;
+  // Detectar usuario recurrente
+  const returningUser = localStorage.getItem("wg_return");
 
-  if(esMobile){
-    // MOBILE → más rápido
-    if(tiempo > 2000){
-      activarCaliente();
-    }
+  if (returningUser) {
+    setLink(msgPropiedad);
   } else {
-    // DESKTOP → más exigente
-    if(tiempo > 3000){
-      activarCaliente();
-    }
+    setLink(msgGeneral);
   }
-}
 
-// eventos
-document.addEventListener("mousemove", evaluarInteraccion);
-document.addEventListener("scroll", evaluarInteraccion);
-document.addEventListener("touchstart", evaluarInteraccion);
+  // Guardar visita
+  localStorage.setItem("wg_return", "true");
 
-// fallback tiempo
-setTimeout(()=>{
-  activarCaliente();
-}, esMobile ? 5000 : 7000);
+  // MOBILE → delay real
+  if (isMobile && !returningUser) {
+    setTimeout(() => {
+      setLink(msgPropiedad);
+    }, 6000);
+  }
+
+  // DESKTOP → interacción real
+  if (!isMobile) {
+    btn.addEventListener("mouseenter", () => {
+      setLink(msgPropiedad);
+    });
+  }
 
 </script>
 
