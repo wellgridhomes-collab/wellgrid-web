@@ -365,7 +365,7 @@
     }
     .img-smart-bg {
       position: absolute; inset: 0;
-      background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1600&q=80');
+      background-image: url('./fondo.png');
       background-size: cover; background-position: center center;
       animation: zoomBg 22s ease-in-out infinite alternate;
     }
@@ -1000,7 +1000,7 @@
     testImg.onerror = () => {
       smartBg.style.background = 'linear-gradient(135deg, #0d1a2e 0%, #111f35 50%, #0a1322 100%)';
     };
-    testImg.src = 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1600&q=80';
+    testImg.src = './smart.png';
   }
 
   // Edificios: si img falla → dark gradient
@@ -1011,7 +1011,7 @@
     testImg2.onerror = () => {
       edificioBg.style.background = 'linear-gradient(135deg, #0d1a2e 0%, #111f35 100%)';
     };
-    testImg2.src = 'https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=1200&q=80';
+    testImg2.src = './tita.png';
   }
 </script>
 
