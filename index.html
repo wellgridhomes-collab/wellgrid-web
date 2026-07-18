@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WellGrid — Propiedades · Hogares Inteligentes · Edificios Conectados</title>
+  <meta name="description" content="Propiedades en Zona Oriente de Santiago. Automatización del hogar. Edificios inteligentes. WellGrid — donde la tecnología y el mundo inmobiliario convergen.">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,200;0,300;0,400;1,200&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --negro: #080808;
+      --negro2: #0e0e0e;
+      --negro3: #141414;
+      --dorado: #c9a96e;
+      --dorado2: #e2c99a;
+      --dorado3: rgba(201,169,110,0.12);
+      --blanco: #f4f2ee;
+      --gris: #7a7a7a;
+      --gris2: #4a4a4a;
+      --accent: #4fc3f7;
+      --font-d: 'DM Serif Display', Georgia, serif;
+      --font-b: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-b);
+      background: var(--negro);
+      color: var(--blanco);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ══ NAV ══ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      padding: 1.4rem 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.5s ease;
+    }
+
+    nav.scrolled {
+      background: rgba(8,8,8,0.94);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(201,169,110,0.1);
+      padding: 1rem 7%;
+    }
+
+    .logo { text-decoration: none; display: flex; flex-direction: column; line-height: 1; }
+    .logo-main {
+      font-family: var(--font-d);
+      font-size: 1.6rem;
+      color: var(--blanco);
+      letter-spacing: 0.05em;
+    }
+    .logo-sub {
+      font-size: 8.5px;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--dorado);
+      margin-top: 3px;
+    }
+
+    .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+
+    .nav-tag {
+      font-size: 9px;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gris);
+      display: none;
+    }
+
+    @media(min-width:800px){ .nav-tag { display: block; } }
+
+    .nav-cta {
+      font-size: 10.5px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--dorado);
+      border: 1px solid rgba(201,169,110,0.35);
+      padding: 0.6rem 1.5rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+    .nav-cta:hover { background: var(--dorado); color: var(--negro); }
+
+    /* ══ HERO ══ */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 640px;
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: 9vh;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('./fondo.png');
+      background-size: cover;
+      background-position: center 25%;
+      animation: zoomSlow 28s ease-in-out infinite alternate;
+    }
+
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(90deg, rgba(8,8,8,0.85) 0%, rgba(8,8,8,0.3) 60%, rgba(8,8,8,0.1) 100%),
+        linear-gradient(0deg, rgba(8,8,8,0.92) 0%, transparent 55%);
+    }
+
+    /* Geometric tech accent */
+    .hero-grid-overlay {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(201,169,110,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,169,110,0.03) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse 70% 70% at 70% 50%, transparent 30%, rgba(0,0,0,0.8) 100%);
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      padding: 0 7%;
+      max-width: 720px;
+    }
+
+    .hero-eyebrow {
+      display: flex; align-items: center; gap: 1rem;
+      font-size: 10px; font-weight: 300;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--dorado);
+      margin-bottom: 1.5rem;
+      opacity: 0; animation: fadeUp 1s ease 0.4s forwards;
+    }
+    .hero-eyebrow::before {
+      content: ''; width: 24px; height: 1px;
+      background: var(--dorado); flex-shrink: 0;
+    }
+
+    .hero-title {
+      font-family: var(--font-d);
+      font-size: clamp(2.8rem, 6.5vw, 6rem);
+      font-weight: 400; line-height: 1.06;
+      color: var(--blanco);
+      opacity: 0; animation: fadeUp 1s ease 0.7s forwards;
+    }
+    .hero-title em { font-style: italic; color: var(--dorado2); }
+
+    .hero-tagline {
+      margin-top: 1.75rem;
+      font-size: clamp(13px, 1.5vw, 15.5px);
+      font-weight: 200; line-height: 1.8;
+      color: rgba(244,242,238,0.65);
+      max-width: 480px;
+      opacity: 0; animation: fadeUp 1s ease 1s forwards;
+    }
+
+    .hero-actions {
+      margin-top: 2.5rem; display: flex; gap: 1rem; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp 1s ease 1.3s forwards;
+    }
+
+    .btn-gold {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.9rem 2rem;
+      border: 1px solid var(--dorado);
+      color: var(--dorado); font-size: 11px; font-weight: 400;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      text-decoration: none; transition: all 0.35s ease;
+      position: relative; overflow: hidden;
+    }
+    .btn-gold::before {
+      content: ''; position: absolute; inset: 0;
+      background: var(--dorado); transform: scaleX(0);
+      transform-origin: left; transition: transform 0.35s ease; z-index: 0;
+    }
+    .btn-gold:hover { color: var(--negro); }
+    .btn-gold:hover::before { transform: scaleX(1); }
+    .btn-gold span, .btn-gold svg { position: relative; z-index: 1; }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.9rem 2rem;
+      border: 1px solid rgba(244,242,238,0.15);
+      color: rgba(244,242,238,0.6); font-size: 11px; font-weight: 300;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      text-decoration: none; transition: all 0.3s ease;
+    }
+    .btn-ghost:hover { border-color: var(--dorado); color: var(--dorado); }
+
+    /* Stats inline hero */
+    .hero-stats {
+      position: absolute; bottom: 9vh; right: 7%;
+      display: flex; flex-direction: column; gap: 1.5rem;
+      opacity: 0; animation: fadeIn 1.2s ease 1.8s forwards;
+      z-index: 2;
+    }
+    .hero-stat { text-align: right; }
+    .hero-stat-n {
+      font-family: var(--font-d); font-style: italic;
+      font-size: 2.2rem; color: var(--dorado);
+      line-height: 1;
+    }
+    .hero-stat-l {
+      font-size: 9px; font-weight: 300;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gris); margin-top: 2px;
+    }
+
+    /* Scroll indicator */
+    .hero-scroll {
+      position: absolute; bottom: 2rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      opacity: 0; animation: fadeIn 1s ease 2.2s forwards;
+      z-index: 2;
+    }
+    .hero-scroll span {
+      font-size: 8px; letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--gris2);
+    }
+    .scroll-bar {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, var(--dorado), transparent);
+      animation: scrollAnim 2s ease-in-out infinite;
+    }
+    @keyframes scrollAnim {
+      0%,100% { opacity: 0.3; transform: scaleY(0.7); }
+      50% { opacity: 1; transform: scaleY(1); }
+    }
+
+    /* ══ SECTION BASE ══ */
+    .section-label {
+      display: flex; align-items: center; gap: 0.875rem;
+      font-size: 9.5px; font-weight: 400;
+      letter-spacing: 0.26em; text-transform: uppercase;
+      color: var(--dorado); margin-bottom: 1.25rem;
+    }
+    .section-label::before {
+      content: ''; width: 22px; height: 1px;
+      background: var(--dorado); flex-shrink: 0;
+    }
+
+    .section-title {
+      font-family: var(--font-d);
+      font-size: clamp(1.9rem, 3.5vw, 3rem);
+      font-weight: 400; line-height: 1.18;
+      color: var(--blanco);
+    }
+    .section-title em { font-style: italic; color: var(--dorado2); }
+
+    /* ══ STRIP — PROPUESTA ══ */
+    .strip {
+      padding: 4rem 7%;
+      background: var(--negro2);
+      border-top: 1px solid rgba(201,169,110,0.08);
+      border-bottom: 1px solid rgba(201,169,110,0.08);
+    }
+    .strip-inner {
+      display: flex; align-items: center; gap: 3rem;
+      max-width: 900px;
+    }
+    .strip-line {
+      width: 1px; height: 80px;
+      background: linear-gradient(to bottom, transparent, var(--dorado), transparent);
+      flex-shrink: 0;
+    }
+    .strip blockquote {
+      font-family: var(--font-d); font-style: italic;
+      font-size: clamp(1.15rem, 2vw, 1.55rem);
+      font-weight: 400; line-height: 1.5;
+      color: var(--blanco);
+    }
+    .strip blockquote em { color: var(--dorado2); }
+
+    /* ══ PUERTAS ══ */
+    .puertas { padding: 7rem 7%; }
+
+    .puertas-header {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2rem; align-items: end;
+      margin-bottom: 4rem;
+    }
+    .puertas-sub {
+      font-size: 14px; font-weight: 200; line-height: 1.8;
+      color: var(--gris); align-self: end;
+    }
+
+    .puertas-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1px; background: rgba(201,169,110,0.07);
+      border: 1px solid rgba(201,169,110,0.07);
+    }
+
+    .puerta {
+      background: var(--negro2);
+      padding: 2.75rem 2.25rem 2.25rem;
+      display: flex; flex-direction: column;
+      transition: background 0.3s ease;
+      position: relative; overflow: hidden;
+    }
+
+    /* Tech corner accent */
+    .puerta::after {
+      content: '';
+      position: absolute; top: 0; right: 0;
+      width: 40px; height: 40px;
+      border-top: 1px solid rgba(201,169,110,0.2);
+      border-right: 1px solid rgba(201,169,110,0.2);
+      transition: all 0.4s ease;
+    }
+    .puerta:hover { background: #111; }
+    .puerta:hover::after {
+      width: 60px; height: 60px;
+      border-color: rgba(201,169,110,0.5);
+    }
+
+    /* Bottom progress bar */
+    .puerta::before {
+      content: ''; position: absolute;
+      bottom: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--dorado), var(--accent));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.45s ease;
+    }
+    .puerta:hover::before { transform: scaleX(1); }
+
+    .puerta-n {
+      font-family: var(--font-d); font-style: italic;
+      font-size: 2.5rem; color: rgba(201,169,110,0.12);
+      line-height: 1; margin-bottom: 1.5rem;
+    }
+
+    .puerta-cat {
+      font-size: 9px; font-weight: 400;
+      letter-spacing: 0.26em; text-transform: uppercase;
+      color: var(--dorado); margin-bottom: 0.875rem;
+    }
+
+    .puerta h3 {
+      font-family: var(--font-d); font-size: 1.35rem;
+      font-weight: 400; color: var(--blanco);
+      line-height: 1.25; margin-bottom: 1rem;
+    }
+
+    .puerta p {
+      font-size: 13px; font-weight: 200;
+      color: var(--gris); line-height: 1.8;
+      margin-bottom: 1.75rem; flex: 1;
+    }
+
+    .puerta-btns { display: flex; flex-direction: column; gap: 0.6rem; }
+
+    .wa-btn {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.7rem 1rem;
+      border: 1px solid rgba(201,169,110,0.15);
+      color: rgba(244,242,238,0.7);
+      font-family: var(--font-b); font-size: 12px; font-weight: 300;
+      letter-spacing: 0.04em; text-decoration: none;
+      transition: all 0.3s ease; cursor: pointer;
+    }
+    .wa-btn:hover {
+      border-color: var(--dorado); color: var(--dorado);
+      background: rgba(201,169,110,0.04);
+    }
+    .wa-btn.primary {
+      border-color: rgba(201,169,110,0.28);
+      background: rgba(201,169,110,0.05);
+    }
+    .wa-btn svg { width: 15px; height: 15px; flex-shrink: 0; opacity: 0.8; }
+
+    /* ══ IMAGEN INTERMEDIA 1 — HOGAR INTELIGENTE ══ */
+    .img-section {
+      position: relative; overflow: hidden;
+      height: 70vh; min-height: 480px;
+    }
+    .img-section-bg {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      animation: zoomSlow 24s ease-in-out infinite alternate;
+    }
+    .img-section-overlay {
+      position: absolute; inset: 0;
+    }
+    .img-section-content {
+      position: relative; z-index: 2;
+      height: 100%; display: flex;
+      align-items: center; padding: 0 7%;
+    }
+    .img-section-text { max-width: 520px; }
+    .img-section-text h2 {
+      font-family: var(--font-d);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 400; line-height: 1.1;
+      color: var(--blanco); margin-bottom: 1.25rem;
+    }
+    .img-section-text h2 em { font-style: italic; color: var(--dorado2); }
+    .img-section-text p {
+      font-size: 14px; font-weight: 200;
+      line-height: 1.8; color: rgba(244,242,238,0.7);
+      margin-bottom: 2rem;
+    }
+
+    /* Tech dots decoration */
+    .tech-dots {
+      position: absolute; right: 7%; bottom: 3rem;
+      display: grid; grid-template-columns: repeat(5,1fr);
+      gap: 8px; opacity: 0.25; z-index: 2;
+    }
+    .tech-dot {
+      width: 4px; height: 4px;
+      background: var(--dorado); border-radius: 50%;
+    }
+    .tech-dot:nth-child(3n) { background: var(--accent); }
+
+    /* ══ PROCESO ══ */
+    .proceso { padding: 7rem 7%; background: var(--negro3); }
+    .proceso-grid {
+      display: grid; grid-template-columns: repeat(4,1fr);
+      gap: 1px; background: rgba(201,169,110,0.06);
+      border: 1px solid rgba(201,169,110,0.06);
+      margin-top: 3.5rem;
+    }
+    .paso {
+      background: var(--negro2); padding: 2.5rem 2rem;
+      transition: background 0.3s ease;
+    }
+    .paso:hover { background: #111; }
+    .paso-n {
+      font-family: var(--font-d); font-style: italic;
+      font-size: 3.5rem; color: rgba(201,169,110,0.1);
+      line-height: 1; margin-bottom: 1.25rem;
+    }
+    .paso-icon {
+      font-size: 1.4rem; margin-bottom: 1rem;
+    }
+    .paso h4 {
+      font-family: var(--font-d); font-size: 1.1rem;
+      font-weight: 400; color: var(--blanco);
+      margin-bottom: 0.75rem; line-height: 1.2;
+    }
+    .paso p {
+      font-size: 12.5px; font-weight: 200;
+      color: var(--gris); line-height: 1.75;
+    }
+
+    /* ══ IMAGEN INTERMEDIA 2 — EDIFICIOS ══ */
+    .img-right {
+      display: grid; grid-template-columns: 1fr 1fr;
+      min-height: 600px;
+    }
+    .img-right-visual {
+      position: relative; overflow: hidden;
+    }
+    .img-right-visual-bg {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      animation: zoomSlow 20s ease-in-out infinite alternate;
+    }
+    .img-right-visual-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent 60%, var(--negro) 100%);
+    }
+    .img-right-content {
+      background: var(--negro);
+      padding: 5rem 4rem;
+      display: flex; flex-direction: column; justify-content: center;
+      border-left: 1px solid rgba(201,169,110,0.08);
+    }
+    .img-right-content h2 {
+      font-family: var(--font-d);
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 400; line-height: 1.15;
+      color: var(--blanco); margin-bottom: 1.25rem;
+    }
+    .img-right-content h2 em { font-style: italic; color: var(--dorado2); }
+    .img-right-content p {
+      font-size: 13.5px; font-weight: 200;
+      line-height: 1.85; color: var(--gris);
+      margin-bottom: 1rem;
+    }
+    .features-list {
+      list-style: none; margin: 1.5rem 0 2rem;
+      display: flex; flex-direction: column; gap: 0.7rem;
+    }
+    .features-list li {
+      display: flex; align-items: center; gap: 0.75rem;
+      font-size: 12.5px; font-weight: 300; color: rgba(244,242,238,0.75);
+    }
+    .features-list li::before {
+      content: ''; width: 16px; height: 1px;
+      background: var(--dorado); flex-shrink: 0;
+    }
+
+    /* ══ CTA FINAL ══ */
+    .cta {
+      padding: 8rem 7%;
+      text-align: center; position: relative;
+      overflow: hidden;
+    }
+    .cta-bg-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(201,169,110,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,169,110,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.6), transparent 70%);
+    }
+    .cta-inner { position: relative; z-index: 1; }
+    .cta-deco {
+      width: 1px; height: 64px;
+      background: linear-gradient(to bottom, transparent, var(--dorado));
+      margin: 0 auto 3rem;
+    }
+    .cta h2 {
+      font-family: var(--font-d);
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 400; line-height: 1.1;
+      color: var(--blanco); margin-bottom: 1.25rem;
+    }
+    .cta h2 em { font-style: italic; color: var(--dorado2); }
+    .cta p {
+      font-size: 14px; font-weight: 200;
+      color: var(--gris); max-width: 420px;
+      margin: 0 auto 2.75rem; line-height: 1.8;
+    }
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    /* ══ FOOTER ══ */
+    footer {
+      padding: 2rem 7%;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 1rem;
+    }
+    footer p { font-size: 10.5px; font-weight: 200; color: rgba(122,122,122,0.5); letter-spacing: 0.08em; }
+    .footer-tag { font-family: var(--font-d); font-style: italic; color: rgba(201,169,110,0.35) !important; font-size: 13px !important; }
+
+    /* ══ ANIMATIONS ══ */
+    @keyframes zoomSlow {
+      from { transform: scale(1); }
+      to   { transform: scale(1.06); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0; transform: translateY(22px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.15s; }
+    .reveal-delay-2 { transition-delay: 0.3s; }
+    .reveal-delay-3 { transition-delay: 0.45s; }
+
+    /* ══ RESPONSIVE ══ */
+    @media(max-width:960px) {
+      .puertas-grid { grid-template-columns: 1fr; }
+      .proceso-grid { grid-template-columns: 1fr 1fr; }
+      .puertas-header { grid-template-columns: 1fr; }
+      .img-right { grid-template-columns: 1fr; }
+      .img-right-visual { height: 320px; }
+      .img-right-visual-overlay { background: linear-gradient(0deg, var(--negro) 0%, transparent 60%); }
+      .hero-stats { display: none; }
+    }
+    @media(max-width:600px) {
+      nav { padding: 1.2rem 5%; }
+      .hero-content, .puertas, .proceso, .cta, footer { padding-left: 5%; padding-right: 5%; }
+      .strip { padding: 3rem 5%; }
+      .img-section-content { padding: 0 5%; }
+      .img-right-content { padding: 3rem 5%; }
+      .proceso-grid { grid-template-columns: 1fr; }
+      .hero-title { font-size: 2.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav id="nav">
+  <a href="/" class="logo">
+    <span class="logo-main">WellGrid</span>
+    <span class="logo-sub">Real Estate · Smart Living · Proptech</span>
+  </a>
+  <div class="nav-right">
+    <span class="nav-tag">Zona Oriente · Santiago</span>
+    <a class="nav-cta" id="nav-wa" href="#">Contacto directo</a>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-grid-overlay"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Zona Oriente de Santiago · Chile</div>
+    <h1 class="hero-title">
+      Propiedades.<br>
+      Hogares <em>inteligentes.</em><br>
+      Edificios <em>conectados.</em>
+    </h1>
+    <p class="hero-tagline">
+      Encontramos la propiedad ideal, la transformamos con tecnología
+      y conectamos su comunidad al futuro — todo desde un solo punto.
+    </p>
+    <div class="hero-actions">
+      <a class="btn-gold" id="wa-hero" href="#">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.557 4.12 1.527 5.849L.057 23.447a.75.75 0 00.92.92l5.598-1.47A11.952 11.952 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.698-.505-5.243-1.385l-.376-.217-3.892 1.022 1.022-3.892-.217-.376A9.953 9.953 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+        </svg>
+        <span>Comenzar ahora</span>
+      </a>
+      <a class="btn-ghost" href="#puertas">Ver servicios</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-n">3</div>
+      <div class="hero-stat-l">Ecosistemas integrados</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-n">360°</div>
+      <div class="hero-stat-l">Solución inmobiliaria</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-n">01</div>
+      <div class="hero-stat-l">Conversación. Eso es todo.</div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-bar"></div>
+    <span>Descubrir</span>
+  </div>
+</section>
+
+<!-- ══ STRIP ══ -->
+<div class="strip">
+  <div class="strip-inner reveal">
+    <div class="strip-line"></div>
+    <blockquote>
+      "No vendemos propiedades ni instalamos tecnología.<br>
+      <em>Transformamos la forma en que usted vive.</em>"
+    </blockquote>
+  </div>
+</div>
+
+<!-- ══ PUERTAS ══ -->
+<section class="puertas" id="puertas">
+  <div class="puertas-header">
+    <div class="reveal">
+      <div class="section-label">¿En qué le ayudamos?</div>
+      <h2 class="section-title">Tres caminos.<br><em>Un solo punto de partida.</em></h2>
+    </div>
+    <p class="puertas-sub reveal reveal-delay-1">
+      Cada persona llega con una necesidad distinta. Por eso diseñamos tres puertas de entrada — usted elige la suya y comenzamos desde ahí, a su ritmo y según su presupuesto.
+    </p>
+  </div>
+
+  <div class="puertas-grid">
+    <!-- PUERTA 1 -->
+    <div class="puerta reveal">
+      <div class="puerta-n">01</div>
+      <div class="puerta-cat">Propiedades</div>
+      <h3>Quiero comprar, arrendar o publicar mi propiedad</h3>
+      <p>Asesoría personalizada en la Zona Oriente de Santiago. Tanto si busca su próximo hogar como si tiene una propiedad que quiere poner en valor — comenzamos aquí.</p>
+      <div class="puerta-btns">
+        <a class="wa-btn primary" id="wa-buscar" href="#">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.557 4.12 1.527 5.849L.057 23.447a.75.75 0 00.92.92l5.598-1.47A11.952 11.952 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.698-.505-5.243-1.385l-.376-.217-3.892 1.022 1.022-3.892-.217-.376A9.953 9.953 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+          Busco una propiedad
+        </a>
+        <a class="wa-btn" id="wa-vender" href="#">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.557 4.12 1.527 5.849L.057 23.447a.75.75 0 00.92.92l5.598-1.47A11.952 11.952 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.698-.505-5.243-1.385l-.376-.217-3.892 1.022 1.022-3.892-.217-.376A9.953 9.953 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+          Tengo una propiedad
+        </a>
+      </div>
+    </div>
+
+    <!-- PUERTA 2 -->
+    <div class="puerta reveal reveal-delay-1">
+      <div class="puerta-n">02</div>
+      <div class="puerta-cat">Hogares Inteligentes</div>
+      <h3>Quiero un hogar más cómodo, seguro y tecnológico</h3>
+      <p>Iluminación, climatización, seguridad y control total desde su teléfono. Soluciones por etapas, sin complicaciones — para casas nuevas o existentes.</p>
+      <div class="puerta-btns">
+        <a class="wa-btn primary" id="wa-hogar" href="#">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.557 4.12 1.527 5.849L.057 23.447a.75.75 0 00.92.92l5.598-1.47A11.952 11.952 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.698-.505-5.243-1.385l-.376-.217-3.892 1.022 1.022-3.892-.217-.376A9.953 9.953 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+          Automatizar mi hogar
+        </a>
+      </div>
+    </div>
+
+    <!-- PUERTA 3 -->
+    <div class="puerta reveal reveal-delay-2">
+      <div class="puerta-n">03</div>
+      <div class="puerta-cat">Edificios Inteligentes</div>
+      <h3>Quiero que mi edificio sea más seguro y eficiente</h3>
+      <p>Acceso inteligente, cámaras, citófonos y automatización de conserjería. Su comunidad conectada y protegida — reduciendo gastos comunes sin aumentar cuotas.</p>
+      <div class="puerta-btns">
+        <a class="wa-btn primary" id="wa-edificio" href="#">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.557 4.12 1.527 5.849L.057 23.447a.75.75 0 00.92.92l5.598-1.47A11.952 11.952 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.698-.505-5.243-1.385l-.376-.217-3.892 1.022 1.022-3.892-.217-.376A9.953 9.953 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+          Modernizar mi edificio
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ IMAGEN INTERMEDIA 1 — SMART HOME ══ -->
+<div class="img-section">
+  <div class="img-section-bg" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=85');"></div>
+  <div class="img-section-overlay" style="background:linear-gradient(90deg,rgba(8,8,8,0.88) 0%,rgba(8,8,8,0.5) 50%,rgba(8,8,8,0.2) 100%)"></div>
+  <div class="img-section-content">
+    <div class="img-section-text reveal">
+      <div class="section-label">Hogares Inteligentes</div>
+      <h2>Su hogar. <em>Rediseñado desde adentro.</em></h2>
+      <p>La tecnología no debería verse. Debería sentirse. Automatizamos cada espacio de forma invisible, adaptada a su estilo de vida y a su presupuesto — comenzando por donde más lo necesita.</p>
+      <a class="btn-gold" id="wa-hogar2" href="#">
+        <span>Quiero saber más</span>
+      </a>
+    </div>
+  </div>
+  <div class="tech-dots">
+    <div class="tech-dot"></div><div class="tech-dot"></div><div class="tech-dot"></div><div class="tech-dot"></div><div class="tech-dot"></div>
+    <div class="tech-dot"></div><div class="tech-dot"></div><div class="tech-dot"></div><div class="tech-dot"></div><div class="tech-dot"></div>
+    <div class="tech-dot"></div><div class="tech-dot"></div><div class="tech-dot"></div><div class="tech-dot"></div><div class="tech-dot"></div>
+  </div>
+</div>
+
+<!-- ══ PROCESO ══ -->
+<section class="proceso">
+  <div class="reveal">
+    <div class="section-label">Cómo trabajamos</div>
+    <h2 class="section-title">Simple. Directo. <em>Sin vueltas.</em></h2>
+  </div>
+  <div class="proceso-grid">
+    <div class="paso reveal">
+      <div class="paso-n">01</div>
+      <div class="paso-icon">💬</div>
+      <h4>Una conversación</h4>
+      <p>Todo comienza con un mensaje. Nos cuenta qué necesita y desde ahí trazamos el camino juntos, sin formularios ni esperas.</p>
+    </div>
+    <div class="paso reveal reveal-delay-1">
+      <div class="paso-n">02</div>
+      <div class="paso-icon">🎯</div>
+      <h4>Diagnóstico a medida</h4>
+      <p>Analizamos su caso — propiedad, hogar o edificio — y le presentamos opciones reales acordes a su situación y presupuesto.</p>
+    </div>
+    <div class="paso reveal reveal-delay-2">
+      <div class="paso-n">03</div>
+      <div class="paso-icon">⚡</div>
+      <h4>Solución por etapas</h4>
+      <p>Ejecutamos sin abrumar. Cada etapa tiene sentido propia y genera valor inmediato — no espera al siguiente paso para funcionar.</p>
+    </div>
+    <div class="paso reveal reveal-delay-3">
+      <div class="paso-n">04</div>
+      <div class="paso-icon">∞</div>
+      <h4>Acompañamiento continuo</h4>
+      <p>No desaparecemos después de la venta. Somos su aliado a largo plazo en todo lo que involucre su patrimonio y su hogar.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ IMAGEN DERECHA — EDIFICIOS ══ -->
+<div class="img-right">
+  <div class="img-right-visual">
+    <div class="img-right-visual-bg" style="background-image:url('https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=85'); background-position: center;"></div>
+    <div class="img-right-visual-overlay"></div>
+  </div>
+  <div class="img-right-content reveal">
+    <div class="section-label">Edificios Inteligentes</div>
+    <h2>Su edificio, <em>transformado.</em></h2>
+    <p>Llevamos tecnología de smart building a comunidades de Santiago Oriente — con un modelo accesible que no requiere grandes inversiones iniciales.</p>
+    <ul class="features-list">
+      <li>Control de acceso y citófonos inteligentes</li>
+      <li>Cámaras conectadas en tiempo real</li>
+      <li>Gestión de deliveries sin conserje</li>
+      <li>App móvil para residentes y administración</li>
+      <li>Reducción de gastos comunes</li>
+    </ul>
+    <a class="btn-gold" id="wa-edificio2" href="#">
+      <span>Conocer más</span>
+    </a>
+  </div>
+</div>
+
+<!-- ══ CTA FINAL ══ -->
+<section class="cta">
+  <div class="cta-bg-grid"></div>
+  <div class="cta-inner">
+    <div class="cta-deco"></div>
+    <h2 class="reveal">¿Por dónde quiere<br><em>comenzar?</em></h2>
+    <p class="reveal reveal-delay-1">Una conversación directa. Sin formularios. Sin esperas. Solo resultados.</p>
+    <div class="cta-btns reveal reveal-delay-2">
+      <a class="btn-gold" id="wa-cta" href="#">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.557 4.12 1.527 5.849L.057 23.447a.75.75 0 00.92.92l5.598-1.47A11.952 11.952 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.698-.505-5.243-1.385l-.376-.217-3.892 1.022 1.022-3.892-.217-.376A9.953 9.953 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+        </svg>
+        <span>Iniciar conversación</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <p>© 2025 WellGrid · Zona Oriente · Santiago de Chile</p>
+  <p class="footer-tag">Vivir con intención.</p>
+</footer>
+
+<script>
+  const WA = '56948590700';
+
+  // Mensajes por puerta
+  const MSG = {
+    buscar:   'Hola, estoy buscando una propiedad para comprar o arrendar en la Zona Oriente de Santiago. ¿Me pueden ayudar?',
+    vender:   'Hola, tengo una propiedad y me gustaría recibir asesoría para venderla o arrendarla. ¿Cuál es el proceso?',
+    hogar:    'Hola, me interesa automatizar mi hogar. ¿Qué soluciones tienen y cómo funciona el proceso por etapas?',
+    edificio: 'Hola, soy parte del comité o administración de un edificio en la Zona Oriente y me gustaría conocer cómo modernizar nuestra comunidad.',
+    general:  'Hola, llegué a WellGrid y me gustaría saber más sobre sus servicios.',
+  };
+
+  // Mensaje CTA cambia según tiempo en página
+  let msgCta = MSG.general;
+  setTimeout(() => {
+    msgCta = 'Hola, estuve revisando WellGrid y tengo algunas preguntas sobre sus servicios. ¿Podríamos conversar?';
+  }, 15000);
+  setTimeout(() => {
+    msgCta = 'Hola, estuve revisando WellGrid con detalle y me interesa genuinamente. ¿Podríamos agendar una llamada breve?';
+  }, 45000);
+
+  function waLink(msg) {
+    return `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
+  }
+
+  // Asignar links estáticos
+  const links = {
+    'wa-buscar':   MSG.buscar,
+    'wa-vender':   MSG.vender,
+    'wa-hogar':    MSG.hogar,
+    'wa-hogar2':   MSG.hogar,
+    'wa-edificio': MSG.edificio,
+    'wa-edificio2':MSG.edificio,
+    'nav-wa':      MSG.general,
+    'wa-hero':     MSG.general,
+  };
+
+  Object.entries(links).forEach(([id, msg]) => {
+    const el = document.getElementById(id);
+    if (el) el.href = waLink(msg);
+  });
+
+  // CTA dinámico
+  const ctaEl = document.getElementById('wa-cta');
+  if (ctaEl) {
+    ctaEl.addEventListener('click', e => {
+      e.preventDefault();
+      window.open(waLink(msgCta), '_blank');
+    });
+  }
+
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 50);
+  }, { passive: true });
+
+  // Reveal on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
